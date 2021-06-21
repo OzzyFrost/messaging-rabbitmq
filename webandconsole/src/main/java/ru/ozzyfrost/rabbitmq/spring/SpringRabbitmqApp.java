@@ -1,5 +1,6 @@
 package ru.ozzyfrost.rabbitmq.spring;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
 @RestController
+@Slf4j
 public class SpringRabbitmqApp {
     public static final String EXCHANGE_FOR_PROCESSING_TASK = "processingExchanger";
     public static final String QUEUE_WITH_PROCESSING_TASK_RESULTS = "processingResultsQueue";
@@ -34,7 +36,7 @@ public class SpringRabbitmqApp {
     @GetMapping("/{message}")
     public String sendMessage(@PathVariable String message) {
         rabbitTemplate.convertAndSend(SpringRabbitmqApp.EXCHANGE_FOR_PROCESSING_TASK, null, "Task from Server: " + message);
-        System.out.println("message: " + message);
+        log.info("get message: "+ message);
         return "OK";
     }
 
