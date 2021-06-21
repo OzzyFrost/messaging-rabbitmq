@@ -22,7 +22,11 @@ public class ConsoleProcessorApp {
             String message = new String(delivery.getBody(), "UTF-8");
             System.out.println(" [x] Received task '" + message + "'");
 
-            channel.basicPublish(EXCHANGER_FOR_PROCESSING_RESULTS, "", null, "Task ready".getBytes());
+//            channel.basicPublish(EXCHANGER_FOR_PROCESSING_RESULTS, "", null, "Task ready".getBytes());
+
+
+            StringBuilder sb = new StringBuilder(message);
+            channel.basicPublish(EXCHANGER_FOR_PROCESSING_RESULTS, "", null, sb.reverse().toString().getBytes());
         };
 
         channel.basicConsume(QUEUE_FOR_PROCESSING_NAME, true, deliverCallback, consumerTag -> {

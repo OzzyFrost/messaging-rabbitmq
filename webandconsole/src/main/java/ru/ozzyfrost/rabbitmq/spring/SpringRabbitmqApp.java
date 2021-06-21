@@ -35,7 +35,7 @@ public class SpringRabbitmqApp {
 
     @GetMapping("/{message}")
     public String sendMessage(@PathVariable String message) {
-        rabbitTemplate.convertAndSend(SpringRabbitmqApp.EXCHANGE_FOR_PROCESSING_TASK, null, "Task from Server: " + message);
+        rabbitTemplate.convertAndSend(SpringRabbitmqApp.EXCHANGE_FOR_PROCESSING_TASK, null, message);
         log.info("get message: "+ message);
         return "OK";
     }
